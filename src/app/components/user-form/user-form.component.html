@@ -1,0 +1,45 @@
+<mat-toolbar>
+    <span>{{userForm.controls['id'].value?"Update User details:":"Add new User:"}}</span>
+    <span class="fill-remaining-space"></span>
+    <button class="btn-dialog-close" mat-stroked-button (click)="onDialogClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
+</mat-toolbar>
+<form [formGroup]="userForm" class="normal-form" (submit)="onSubmit()">
+    <mat-grid-list cols="1" rowHeight="400px">
+        <mat-grid-tile>
+            <div class="controless-container">
+                <input type="hidden" formControlName="id">
+                <mat-form-field>
+                    <input formControlName="fullName" matInput placeholder="Full Name*">
+                    <mat-error>This field is mandatory.</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="userName" (keyup)="checkDuplicate('userName')" matInput placeholder="user Id*">
+                    <mat-error *ngIf="userForm.controls['userName'].errors?.['required']">This field is mandatory.</mat-error>
+                    <mat-error *ngIf="userForm.controls['userName'].errors?.['duplicate']"> userName is already taken</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="password" type="password" matInput placeholder="password">
+                    <mat-error *ngIf="userForm.controls['password'].errors?.['required']">This field is mandatory.</mat-error>
+                    <mat-error *ngIf="userForm.controls['password'].errors?.['minlength']">Min 6 characters needed.</mat-error>
+                    <mat-error *ngIf="!userForm.controls['password'].errors?.['required'] && !userForm.controls['password'].errors?.['minlength'] && userForm.controls['password'].errors?.['strong']">{{ getPasswordError() }}</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="email" (keyup)="checkDuplicate('email')" matInput placeholder="Email">
+                    <mat-error *ngIf="userForm.controls['email'].errors?.['email']">Email is invalid</mat-error>
+                    <mat-error *ngIf="userForm.controls['email'].errors?.['duplicate']"> Email is already taken</mat-error>
+                </mat-form-field>
+                <div class="add-bottom-padding">
+                    <mat-radio-group formControlName="gender">
+                        <mat-radio-button value='Male'>Male</mat-radio-button>
+                        <mat-radio-button value='Female'>Female</mat-radio-button>
+                        <mat-radio-button value='Other'>Other</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="button-row">
+                    <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid">Submit</button>
+                    <button *ngIf="!data" mat-raised-button color="warn" (click)="onClear()">Clear</button>
+                </div>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</form>
