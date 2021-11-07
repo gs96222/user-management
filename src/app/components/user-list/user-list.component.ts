@@ -90,7 +90,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '60%';
+    dialogConfig.width = '40%';
     dialogConfig.data = data;
     const dialogRef = this.dialog.open(UserFormComponent, dialogConfig);
 

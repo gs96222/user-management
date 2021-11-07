@@ -36,7 +36,7 @@
                     </mat-radio-group>
                 </div>
                 <div class="button-row">
-                    <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid">Submit</button>
+                    <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid">{{userForm.controls['id'].value? "Update" : "Submit"}}</button>
                     <button *ngIf="!data" mat-raised-button color="warn" (click)="onClear()">Clear</button>
                 </div>
             </div>
